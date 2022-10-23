@@ -44,13 +44,13 @@ namespace Taschenrechner
             {
                 MessageBox.Show("Falsche Eingabe!");
             }
-
-            txb_Display.Text = cal._Result.ToString();
+            txb_Display.Text = $"{cal._Result}";
         }
 
         bool UserInputIsRight(string input, Calculate cal)
         {
             bool isRight = false;
+
             for (int i = 0; i < Operator().Length; i++)
             {
                 if (input.Contains(Operator()[i]))
@@ -66,6 +66,7 @@ namespace Taschenrechner
         bool CanCalculate(string input, Calculate cal)
         {
             bool areNumbers = false;
+
             string[] nums = input.Split(cal._Operator);
             try
             {
@@ -73,8 +74,8 @@ namespace Taschenrechner
                 cal._Number2 = Convert.ToDouble(nums[1]);
                 areNumbers = true;
             }
-            catch (Exception) { }
-
+            catch (Exception){ }
+            
             return areNumbers;
         }
 
