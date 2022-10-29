@@ -21,6 +21,8 @@ namespace Taschenrechner
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        Calculate cal = new Calculate();
         public MainWindow()
         {
             InitializeComponent();
@@ -28,12 +30,22 @@ namespace Taschenrechner
 
         private void btn_Result_Click(object sender, RoutedEventArgs e)
         {
-            
+            BuildSecondNumber();
+            CalculateAndGetResult();
+
         }
 
-        char[] Operator()
+        void CalculateAndGetResult()
         {
-            return new char[] { '+', '-', '*', '/' };
+            cal.GetResult();
+            cal._Number1 = cal._Result;
+            ShowResult();
+            cal._Number2 = 0;
+        }
+
+        void ShowResult()
+        {
+            txb_Display.Text = cal._Number1.ToString();
         }
 
         void ButtonClickNumbers(object sender, RoutedEventArgs e)
@@ -48,6 +60,47 @@ namespace Taschenrechner
             string numberInString = txb_Display.Text;
             numberInString += input;
             txb_Display.Text = numberInString;
+        }
+
+        void ButtonClickOperator(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            string operatorInString = button.Content.ToString();
+
+            if (operatorInString == "X")
+            {
+                operatorInString = "*";
+            }
+
+            if (txb_Display.Text == "" && operatorInString == "-")
+            {
+                BuildANumber(operatorInString);
+            }
+            else
+            {
+
+                BuildFirstNumber();
+                RememberOperator(operatorInString);
+
+                txb_Display.Text += operatorInString;
+            }
+        }
+
+        void BuildFirstNumber()
+        {
+            cal._Number1 = Convert.ToDouble(txb_Display.Text);
+        }
+
+        void RememberOperator(string input)
+        {
+            cal._Operator = Convert.ToChar(input);
+        }
+
+        void BuildSecondNumber()
+        {
+            string cutFromString = $"{cal._Number1}{cal._Operator}";
+            string number2InString = txb_Display.Text.Remove(0, cutFromString.Length);
+            cal._Number2 = Convert.ToDouble(number2InString);
         }
     }
 }
