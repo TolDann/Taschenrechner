@@ -59,6 +59,11 @@ namespace Taschenrechner
 
         void BuildANumber(string input)
         {
+            if (txb_Display.Text == "0" && input != ",")
+            {
+                ClearDisplay();
+            }
+
             string numberInString = txb_Display.Text;
             numberInString += input;
             txb_Display.Text = numberInString;
@@ -91,7 +96,7 @@ namespace Taschenrechner
 
         void PrepareFirstNumber(string operatorInString)
         {
-            if (txb_Display.Text == "" && operatorInString == "-")
+            if (txb_Display.Text == "0" && operatorInString == "-")
             {
                 BuildANumber(operatorInString);
             }
@@ -119,6 +124,21 @@ namespace Taschenrechner
             string cutFromString = $"{cal._Number1}{cal._Operator}";
             string number2InString = txb_Display.Text.Remove(0, cutFromString.Length);
             cal._Number2 = Convert.ToDouble(number2InString);
+        }
+
+        void ButtonClickClear(object sender, RoutedEventArgs e)
+        {
+            DisplayShow0();
+        }
+
+        void DisplayShow0()
+        {
+            txb_Display.Text = "0";
+        }
+
+        void ClearDisplay()
+        {
+            txb_Display.Text = "";
         }
     }
 }
