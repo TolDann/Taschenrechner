@@ -74,11 +74,6 @@ namespace Taschenrechner
             Button button = sender as Button;
             string operatorInString = button.Content.ToString();
 
-            if (operatorInString == "X")
-            {
-                operatorInString = "*";
-            }
-
             if (!canCalculate)
             {
                 if (!firstNumberExists)

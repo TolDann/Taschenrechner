@@ -30,6 +30,9 @@ namespace Taschenrechner.Classes
                 case '*':
                     _Result = _Number1 * _Number2;
                     break;
+                case '%':
+                    _Result = _Number1 % _Number2;
+                    break;
             }
         }
     }
