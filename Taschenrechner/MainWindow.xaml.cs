@@ -140,5 +140,24 @@ namespace Taschenrechner
         {
             txb_Display.Text = "";
         }
+
+        void ButtonClickDel(object sender, RoutedEventArgs e)
+        {
+            DelLastSign();
+        }
+
+        void DelLastSign()
+        {
+            int signsWithoutLastSingn = txb_Display.Text.Length - 1; 
+            
+            if (txb_Display.Text != "0")
+            {
+                txb_Display.Text = txb_Display.Text.Substring(0, signsWithoutLastSingn);
+            }
+            if (txb_Display.Text == "")
+            {
+                txb_Display.Text = "0";
+            }
+        }
     }
 }
