@@ -143,10 +143,10 @@ namespace Taschenrechner
 
         void ButtonClickDel(object sender, RoutedEventArgs e)
         {
-            DelLastSign();
+            DeleteLastSign();
         }
 
-        void DelLastSign()
+        void DeleteLastSign()
         {
             int signsWithoutLastSingn = txb_Display.Text.Length - 1; 
             
@@ -156,7 +156,7 @@ namespace Taschenrechner
             }
             if (txb_Display.Text == "")
             {
-                txb_Display.Text = "0";
+                DisplayShow0();
             }
         }
     }
