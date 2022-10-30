@@ -21,7 +21,8 @@ namespace Taschenrechner
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        bool canCalculate = false;
+        bool firstNumberExists = false;
         Calculate cal = new Calculate();
         public MainWindow()
         {
@@ -32,15 +33,16 @@ namespace Taschenrechner
         {
             BuildSecondNumber();
             CalculateAndGetResult();
-
         }
 
         void CalculateAndGetResult()
         {
             cal.GetResult();
             cal._Number1 = cal._Result;
+            firstNumberExists = false;
             ShowResult();
             cal._Number2 = 0;
+            canCalculate = false;
         }
 
         void ShowResult()
@@ -72,17 +74,33 @@ namespace Taschenrechner
                 operatorInString = "*";
             }
 
+            if (!canCalculate)
+            {
+                if (!firstNumberExists)
+                {
+                    PrepareFirstNumber(operatorInString);
+                }
+                else
+                {
+                    RememberOperator(operatorInString);
+                    txb_Display.Text += operatorInString;
+                    canCalculate = true;
+                }
+            } 
+        }
+
+        void PrepareFirstNumber(string operatorInString)
+        {
             if (txb_Display.Text == "" && operatorInString == "-")
             {
                 BuildANumber(operatorInString);
             }
             else
             {
-
                 BuildFirstNumber();
                 RememberOperator(operatorInString);
-
                 txb_Display.Text += operatorInString;
+                firstNumberExists = true;
             }
         }
 
