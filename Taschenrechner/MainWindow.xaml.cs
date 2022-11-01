@@ -30,10 +30,18 @@ namespace Taschenrechner
         }
 
         private void btn_Result_Click(object sender, RoutedEventArgs e)
-        { 
-            CalculateAndGetResult();
-            canCalculate = false;
-            firstNumberExists = false;
+        {
+            if (!txb_Display.Text.EndsWith(cal._Operator.ToString()) && canCalculate)
+            {
+                if (txb_Display.Text.EndsWith(","))
+                {
+                    ChangeCommaIntoNumber();
+                }
+                CalculateAndGetResult();
+                canCalculate = false;
+                firstNumberExists = false;
+            }
+            
         }
 
         void CalculateAndGetResult()
@@ -41,8 +49,8 @@ namespace Taschenrechner
             BuildSecondNumber();
             cal.GetResult();
             cal._Number1 = cal._Result;
-            ShowResult();
             cal._Number2 = 0;
+            ShowResult();
         }
 
         void ShowResult()
@@ -55,6 +63,7 @@ namespace Taschenrechner
             Button button = sender as Button;
             string text = button.Content.ToString();
             BuildANumber(text);
+            ChangeDisplayFontSize();
         }
 
         void BuildANumber(string input)
@@ -74,30 +83,64 @@ namespace Taschenrechner
             Button button = sender as Button;
             string operatorInString = button.Content.ToString();
 
-            if (!canCalculate)
+            if (txb_Display.Text.EndsWith("+") || txb_Display.Text.EndsWith("-") || txb_Display.Text.EndsWith("*") || txb_Display.Text.EndsWith("/") || txb_Display.Text.EndsWith("%"))
             {
-                if (!firstNumberExists && txb_Display.Text == "0")
+                if(txb_Display.Text != "-")
                 {
-                    PrepareFirstNumber(operatorInString);
-
+                    ChangeOperator(operatorInString);
                 }
-                else if (!firstNumberExists)
-                {
-                    PrepareFirstNumber(operatorInString);
-                    canCalculate = true;
-                }
-                else
-                {
-                    RememberOperator(operatorInString);
-                    txb_Display.Text += operatorInString;
-                }
+            }
+            else if (txb_Display.Text.EndsWith(","))
+            {
+                DeleteLastSign();
+            }
+            else if (!canCalculate)
+            {
+                CheckOperatorProcess(operatorInString);
             }
             else
             {
                 CalculateAndGetResult();
                 RememberOperator(operatorInString);
                 txb_Display.Text += operatorInString;
-            } 
+            }
+
+            ChangeDisplayFontSize();
+        }
+
+        void ChangeOperator(string operatorInString)
+        {
+            DeleteLastSign();
+            RememberOperator(operatorInString);
+            if (txb_Display.Text != "0")
+            {
+                txb_Display.Text += operatorInString;
+            }
+            else
+            {
+                txb_Display.Text = operatorInString;
+            }
+        }
+
+        void CheckOperatorProcess(string operatorInString)
+        {
+            if (!firstNumberExists && txb_Display.Text == "0")
+            {
+                if(operatorInString == "-")
+                {
+                    PrepareFirstNumber(operatorInString);
+                }
+            }
+            else if (!firstNumberExists)
+            {
+                PrepareFirstNumber(operatorInString);
+                canCalculate = true;
+            }
+            else
+            {
+                RememberOperator(operatorInString);
+                txb_Display.Text += operatorInString;
+            }
         }
 
         void PrepareFirstNumber(string operatorInString)
@@ -135,6 +178,8 @@ namespace Taschenrechner
         void ButtonClickClear(object sender, RoutedEventArgs e)
         {
             DisplayShow0();
+            firstNumberExists = false;
+            canCalculate = false;
         }
 
         void DisplayShow0()
@@ -154,8 +199,12 @@ namespace Taschenrechner
 
         void DeleteLastSign()
         {
-            int signsWithoutLastSingn = txb_Display.Text.Length - 1; 
-            
+            int signsWithoutLastSingn = txb_Display.Text.Length - 1;
+
+            if (txb_Display.Text.EndsWith("+") || txb_Display.Text.EndsWith("-") || txb_Display.Text.EndsWith("*") || txb_Display.Text.EndsWith("/"))
+            {
+                firstNumberExists = false;
+            }
             if (txb_Display.Text != "0")
             {
                 txb_Display.Text = txb_Display.Text.Substring(0, signsWithoutLastSingn);
@@ -163,6 +212,32 @@ namespace Taschenrechner
             if (txb_Display.Text == "")
             {
                 DisplayShow0();
+            }
+        }
+
+        void ChangeCommaIntoNumber()
+        {
+            DeleteLastSign();
+            txb_Display.Text += "0,0";
+        }
+
+        void ChangeDisplayFontSize()
+        {
+            if (txb_Display.Text.Length < 10 )
+            {
+                txb_Display.FontSize = 25;
+            }
+            else if (txb_Display.Text.Length <= 15)
+            {
+                txb_Display.FontSize = 20;
+            }
+            else if (txb_Display.Text.Length <= 20)
+            {
+                txb_Display.FontSize = 14;
+            }
+            else
+            {
+                txb_Display.FontSize = 10;
             }
         }
     }
