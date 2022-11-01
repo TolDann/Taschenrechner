@@ -85,7 +85,10 @@ namespace Taschenrechner
 
             if (txb_Display.Text.EndsWith("+") || txb_Display.Text.EndsWith("-") || txb_Display.Text.EndsWith("*") || txb_Display.Text.EndsWith("/") || txb_Display.Text.EndsWith("%"))
             {
-                ChangeOperator(operatorInString);
+                if(txb_Display.Text != "-")
+                {
+                    ChangeOperator(operatorInString);
+                }
             }
             else if (txb_Display.Text.EndsWith(","))
             {
@@ -175,6 +178,8 @@ namespace Taschenrechner
         void ButtonClickClear(object sender, RoutedEventArgs e)
         {
             DisplayShow0();
+            firstNumberExists = false;
+            canCalculate = false;
         }
 
         void DisplayShow0()
@@ -198,7 +203,6 @@ namespace Taschenrechner
 
             if (txb_Display.Text.EndsWith("+") || txb_Display.Text.EndsWith("-") || txb_Display.Text.EndsWith("*") || txb_Display.Text.EndsWith("/"))
             {
-                canCalculate = false;
                 firstNumberExists = false;
             }
             if (txb_Display.Text != "0")
