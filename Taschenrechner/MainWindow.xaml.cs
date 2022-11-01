@@ -30,10 +30,18 @@ namespace Taschenrechner
         }
 
         private void btn_Result_Click(object sender, RoutedEventArgs e)
-        { 
-            CalculateAndGetResult();
-            canCalculate = false;
-            firstNumberExists = false;
+        {
+            if (!txb_Display.Text.EndsWith(cal._Operator.ToString()) && canCalculate)
+            {
+                if (txb_Display.Text.EndsWith(","))
+                {
+                    ChangeCommaIntoNumber();
+                }
+                CalculateAndGetResult();
+                canCalculate = false;
+                firstNumberExists = false;
+            }
+            
         }
 
         void CalculateAndGetResult()
@@ -74,9 +82,13 @@ namespace Taschenrechner
             Button button = sender as Button;
             string operatorInString = button.Content.ToString();
 
-            if (txb_Display.Text.EndsWith("+") || txb_Display.Text.EndsWith("-") || txb_Display.Text.EndsWith("*") || txb_Display.Text.EndsWith("/"))
+            if (txb_Display.Text.EndsWith("+") || txb_Display.Text.EndsWith("-") || txb_Display.Text.EndsWith("*") || txb_Display.Text.EndsWith("/") || txb_Display.Text.EndsWith("%"))
             {
                 ChangeOperator(operatorInString);
+            }
+            else if (txb_Display.Text.EndsWith(","))
+            {
+                DeleteLastSign();
             }
             else if (!canCalculate)
             {
@@ -194,6 +206,12 @@ namespace Taschenrechner
             {
                 DisplayShow0();
             }
+        }
+
+        void ChangeCommaIntoNumber()
+        {
+            DeleteLastSign();
+            txb_Display.Text += "0,0";
         }
     }
 }
