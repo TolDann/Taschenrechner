@@ -63,6 +63,7 @@ namespace Taschenrechner
             Button button = sender as Button;
             string text = button.Content.ToString();
             BuildANumber(text);
+            ChangeDisplayFontSize();
         }
 
         void BuildANumber(string input)
@@ -99,7 +100,9 @@ namespace Taschenrechner
                 CalculateAndGetResult();
                 RememberOperator(operatorInString);
                 txb_Display.Text += operatorInString;
-            } 
+            }
+
+            ChangeDisplayFontSize();
         }
 
         void ChangeOperator(string operatorInString)
@@ -212,6 +215,26 @@ namespace Taschenrechner
         {
             DeleteLastSign();
             txb_Display.Text += "0,0";
+        }
+
+        void ChangeDisplayFontSize()
+        {
+            if (txb_Display.Text.Length < 10 )
+            {
+                txb_Display.FontSize = 25;
+            }
+            else if (txb_Display.Text.Length <= 15)
+            {
+                txb_Display.FontSize = 20;
+            }
+            else if (txb_Display.Text.Length <= 20)
+            {
+                txb_Display.FontSize = 14;
+            }
+            else
+            {
+                txb_Display.FontSize = 10;
+            }
         }
     }
 }
