@@ -80,7 +80,7 @@ namespace Taschenrechner
             }
             else if (!canCalculate)
             {
-                CheckOperatorPrecess(operatorInString);
+                CheckOperatorProcess(operatorInString);
             }
             else
             {
@@ -104,7 +104,7 @@ namespace Taschenrechner
             }
         }
 
-        void CheckOperatorPrecess(string operatorInString)
+        void CheckOperatorProcess(string operatorInString)
         {
             if (!firstNumberExists && txb_Display.Text == "0")
             {
