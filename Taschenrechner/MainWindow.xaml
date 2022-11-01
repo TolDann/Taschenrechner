@@ -5,17 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Taschenrechner"
         mc:Ignorable="d"
-        Title="Taschenrechner" Height="450" Width="400" MaxHeight="550" MaxWidth="500"
-        Background="#FF272727" BorderBrush="Gray" BorderThickness="5"
-        WindowStyle="ToolWindow">
+        Title="Taschenrechner" Height="450" Width="400" MaxHeight="550" MaxWidth="500" BorderThickness="5"
+        WindowStyle="ToolWindow" BorderBrush="White">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF1F1E1E" Offset="0.18"/>
+            <GradientStop Color="#FF2F2C2C" Offset="0.473"/>
+            <GradientStop Color="#FF171616" Offset="0.768"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
@@ -28,8 +34,8 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="2" Margin="0,10" BorderThickness="5" BorderBrush="#FF5D5D5D" Background="#FF171717">
-        <TextBlock Name="txb_Display" FontSize="25" FontWeight="Bold" Foreground="White">0</TextBlock>
+        <Label Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="2" Margin="0,10" BorderThickness="5" Background="#FF171717" BorderBrush="#FF4A4646">
+            <TextBlock Name="txb_Display" FontSize="25" FontWeight="Bold" Foreground="White">0</TextBlock>
         </Label>
         <Button Grid.Column="1" Grid.Row="3" Click="ButtonClickClear">C</Button>
         <Button Grid.Column="2" Grid.Row="3" Click="ButtonClickOperator">/</Button>
@@ -38,7 +44,7 @@
         <Button Grid.Column="4" Grid.Row="4" Click="ButtonClickOperator">-</Button>
         <Button Grid.Column="4" Grid.Row="5" Click="ButtonClickOperator">+</Button>
         <Button Name="btn_Result" Click="btn_Result_Click" Grid.Column="4" Grid.Row="6" Grid.RowSpan="2" Background="Orange">=</Button>
-        
+
         <Button Grid.Column="1" Grid.Row="4" Click="ButtonClickNumbers">1</Button>
         <Button Grid.Column="2" Grid.Row="4" Click="ButtonClickNumbers">2</Button>
         <Button Grid.Column="3" Grid.Row="4" Click="ButtonClickNumbers">3</Button>
