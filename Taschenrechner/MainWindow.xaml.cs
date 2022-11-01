@@ -30,19 +30,19 @@ namespace Taschenrechner
         }
 
         private void btn_Result_Click(object sender, RoutedEventArgs e)
-        {
-            BuildSecondNumber();
+        { 
             CalculateAndGetResult();
+            canCalculate = false;
+            firstNumberExists = false;
         }
 
         void CalculateAndGetResult()
         {
+            BuildSecondNumber();
             cal.GetResult();
             cal._Number1 = cal._Result;
-            firstNumberExists = false;
             ShowResult();
             cal._Number2 = 0;
-            canCalculate = false;
         }
 
         void ShowResult()
@@ -76,16 +76,27 @@ namespace Taschenrechner
 
             if (!canCalculate)
             {
-                if (!firstNumberExists)
+                if (!firstNumberExists && txb_Display.Text == "0")
                 {
                     PrepareFirstNumber(operatorInString);
+
+                }
+                else if (!firstNumberExists)
+                {
+                    PrepareFirstNumber(operatorInString);
+                    canCalculate = true;
                 }
                 else
                 {
                     RememberOperator(operatorInString);
                     txb_Display.Text += operatorInString;
-                    canCalculate = true;
                 }
+            }
+            else
+            {
+                CalculateAndGetResult();
+                RememberOperator(operatorInString);
+                txb_Display.Text += operatorInString;
             } 
         }
 
